@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Text Detection</title>
+</head>
+<body>
+    <h1>OCR Text Detection</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="detect-btn">Detect Text</button>
+    <div id="result"></div>
+
+    <script>
+        const video = document.getElementById('video');
+        const detectBtn = document.getElementById('detect-btn');
+
+        // Access the device camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error("Error accessing camera: ", err);
+            });
+
+        detectBtn.addEventListener('click', function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0);
+            const capturedImage = canvas.toDataURL('image/jpeg');
+
+            fetch('http://localhost:5000/ocr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image: capturedImage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = ''; // Clear previous results
+                if (data.error) {
+                    resultDiv.innerHTML += `<p>${data.error}</p>`;
+                } else if (data.detected_text) {
+                    resultDiv.innerHTML += `<p>Detected text: ${data.detected_text}</p>`;
+                } else {
+                    resultDiv.innerHTML += `<p>No text detected.</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
