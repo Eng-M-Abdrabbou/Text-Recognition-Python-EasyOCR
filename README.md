@@ -1,7 +1,7 @@
-# Text-Detection-Python-EasyOCR
+# Text-Recognition-Python-EasyOCR
 
 ## Project Overview
-Text-Detection-Python-EasyOCR is a web-based application that uses computer vision and Optical Character Recognition (OCR) to detect and extract text from live camera feed in real-time.
+Text-Recognition-Python-EasyOCR is a web-based application that uses computer vision and Optical Character Recognition (OCR) to detect and extract text from live camera feed in real-time.
 
 ## Features
 - Live camera text detection
@@ -25,7 +25,7 @@ Text-Detection-Python-EasyOCR is a web-based application that uses computer visi
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Eng-M-Abdrabbou/Text-Detection-Python-EasyOCR.git
+git clone https://github.com/Eng-M-Abdrabbou/Text-Recognition-Python-EasyOCR.git
 cd Text-Detection-Python-EasyOCR
 
 ```
